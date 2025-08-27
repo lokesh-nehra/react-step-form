@@ -1,6 +1,6 @@
 import ProgressBar from "./ProgressBar";
 
-function Step1({ formData, handleChange, nextStep, error, setError }) {
+function Step1({ formData, handleChange, nextStep, error, setError, setStep }) {
   const validate = () => {
     const newErrors = {};
 
@@ -19,7 +19,7 @@ function Step1({ formData, handleChange, nextStep, error, setError }) {
 
   return (
     <div className="relative w-full max-w-lg mx-auto mt-8 h-max mb-1 ">
-      <ProgressBar currentStep={1} />
+      <ProgressBar currentStep={1} setStep={setStep}/>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl mx-auto mt-8 h-max mb-1 ">
         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-400 to-teal-600 text-white px-4 py-2 rounded shadow-md">
           Introduction
@@ -95,7 +95,7 @@ function Step1({ formData, handleChange, nextStep, error, setError }) {
             required
             className={`w-full px-4 py-2 border rounded shadow-sm focus:outline-none ${
               error.gender ? "border-red-500" : "border-gray-300"
-            } focus:ring-2 ${
+            } focus:ring-1 ${
               error.gender ? "focus:ring-red-500" : "focus:ring-blue-500"
             }`}
           >

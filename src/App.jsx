@@ -8,6 +8,7 @@ import Step4 from "./components/Step4.jsx";
 
 function App() {
   const [step, setStep] = useState(1);
+  console.log('step', step)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -43,7 +44,13 @@ function App() {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value.trimStart(),
-    });
+    })
+    setError({
+      ...error,
+      [event.target.name]:""
+    })
+    // console.log(event.target.name);
+    // console.log(event.target.value);
   };
 
   const handleSubmit = () => {
@@ -63,14 +70,14 @@ function App() {
     fieldOfStudy: "",
     company: "",
     jobTitle: "",
-    experience: "",
+    experience: "",   
     startDate: "",
     endDate: "",
     })
   };
 
   return (
-    <div className="bg-slate-400 flex place-content-center h-max bg-gradient-to-r from-blue-200 to-purple-600">
+    <div className="bg-[url('D:\Lokesh\tech-superior\step-form-react(Task1)\react-step-form-main\pictures\2d-graphic-wallpaper-with-colorful-grainy-gradients.jpg')] bg-cover bg-center bg-no-repeat flex place-content-center h-max">
       {step === 1 && (
         <Step1
           formData={formData}
@@ -78,6 +85,7 @@ function App() {
           nextStep={nextStep}
           error={error}
           setError={setError}
+          setStep={setStep}
         />
       )}
       {step === 2 && (
@@ -89,6 +97,7 @@ function App() {
           setFormData={setFormData}
           error={error}
           setError={setError}
+          setStep={setStep}
         />
       )}
       {step === 3 && (
@@ -99,6 +108,7 @@ function App() {
           prevStep={prevStep}
           error={error}
           setError={setError}
+          setStep={setStep}
         />
       )}
       {step === 4 && (
@@ -106,6 +116,7 @@ function App() {
           formData={formData}
           prevStep={prevStep}
           handleSubmit={handleSubmit}
+          setStep={setStep}
         />
       )}
     </div>

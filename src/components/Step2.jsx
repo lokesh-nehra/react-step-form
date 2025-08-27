@@ -1,14 +1,6 @@
 import ProgressBar from "./ProgressBar";
 
-function Step2({
-  formData,
-  handleChange,
-  nextStep,
-  prevStep,
-  setFormData,
-  error,
-  setError,
-}) {
+function Step2({  formData,  handleChange,  nextStep,  prevStep,  setFormData,  error,  setError, setStep}) {
   const validate = () => {
     const newErrors = {};
 
@@ -57,9 +49,19 @@ function Step2({
     setFormData({ ...formData, colleges: [...formData.colleges, ""] });
   };
 
+  const removeCourse = (indexToRemove) => {
+    const updatedCourses = formData.courses.filter((_,index) =>( index !== indexToRemove));
+    setFormData({ ...formData, courses: updatedCourses });
+  }
+
+  const removeCollege = (indexToRemove) => {
+    const updatedCourses = formData.colleges.filter((_,index) =>( index !== indexToRemove));
+    setFormData({ ...formData, colleges: updatedCourses });
+  };
+
   return (
     <div className="relative w-full max-w-lg mx-auto mt-8 h-max mb-1 ">
-      <ProgressBar currentStep={2} />
+      <ProgressBar currentStep={2} setStep={setStep}/>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl mx-auto mt-8 h-max mb-1 ">
         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-blue-400 to-teal-600 text-white px-4 py-2 rounded shadow-md">
           Education
@@ -91,10 +93,10 @@ function Step2({
             Course<span className="text-red-500">*</span>
           </label>
           {formData.courses.map((course, index) => (
-            <>
+            <div key={index} className="relative">
               <input
                 name="course"
-                key={index}
+                // key={index}
                 value={course}
                 onChange={(e) => {
                   handleCourseChange(index, e.target.value);
@@ -106,7 +108,10 @@ function Step2({
                   error.courses ? "focus:ring-red-500" : "focus:ring-blue-500"
                 }`}
               />
-            </>
+               {index > 0 && (
+                <button type="button" onClick={()=>(removeCourse(index))}  className="absolute right-3 top-1 text-gray-400 hover:text-zinc-800 font-mono text-2xl">x</button>
+               )}
+            </div>
           ))}
           <div className="flex justify-between">
             <button
@@ -127,7 +132,7 @@ function Step2({
             College<span className="text-red-500">*</span>
           </label>
           {formData.colleges.map((college, index) => (
-            <>
+            <div key={index} className="relative" >
               <input
                 name="college"
                 value={college}
@@ -141,7 +146,10 @@ function Step2({
                   error.colleges ? "focus:ring-red-500" : "focus:ring-blue-500"
                 }`}
               />
-            </>
+              {index > 0 && (
+                <button onClick={() => removeCollege(index)} className="absolute top-1 right-3 text-gray-400 hover:text-zinc-800 text-2xl font-mono">x</button>
+              )}
+            </div>
           ))}
           <div className="flex justify-between">
             <button
